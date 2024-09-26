@@ -1,0 +1,27 @@
+name: Cocoapods
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'extras/images/**'
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "macOS Latest",
+            os: macos-latest
+          }
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test
+        run: pod lib lint
